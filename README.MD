@@ -2,6 +2,10 @@ person-data-approval
 ======
 Aplicação responsável por gerenciar aprovação/desaprovação de dados de pessoas
 
+### Desenho da Solução
+![](docs/person-data-approval-architecture.png)
+
+
 ### API 
 
 **Criar uma aprovação**
