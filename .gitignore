@@ -1,0 +1,15 @@
+.classpath
+.mvn/
+.project
+.settings/
+build.gradle
+gradle/
+gradlew
+gradlew.bat
+mvnw
+mvnw.cmd
+target/
+.DS_Store
+.idea/
+*.iml
+*.tar

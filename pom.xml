@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>br.com.itau</groupId>
+	<artifactId>personaldataapproval</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>personal-data-approval</name>
+	<description>Application for personal data approval</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<kotlin.version>1.4.31</kotlin.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.30</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-test</artifactId>
+			<version>${kotlin.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-maven-plugin</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-reflect</artifactId>
+			<version>1.1.51</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-sns</artifactId>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.amazonaws</groupId>
+				<artifactId>aws-java-sdk-bom</artifactId>
+				<version>1.11.1000</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-maven-plugin</artifactId>
+				<version>${kotlin.version}</version>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>test-compile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jvmTarget>1.8</jvmTarget>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>testCompile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

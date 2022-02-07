@@ -1,0 +1,73 @@
+version: '3.1'
+
+services:
+
+
+  db-pda:
+    image: mysql/mysql-server:5.6.43
+    hostname: db-pda
+    environment:
+      MYSQL_DATABASE: person_data_approval
+      MYSQL_USER: app
+      MYSQL_PASSWORD: pda_app_891
+      MYSQL_ROOT_PASSWORD: pda_app_891
+    ports:
+      - "3306:3306"
+
+
+  phpmyadmin-pda:
+    image: phpmyadmin/phpmyadmin
+    hostname: phpmyadmin-pda
+    links:
+      - db-pda
+    ports:
+      - 8000:80
+    environment:
+      PMA_HOST: db-pda
+      PMA_PORT: 3306
+      MYSQL_USER: app
+      MYSQL_PASSWORD: pda_app_891
+      MYSQL_ROOT_PASSWORD: pda_app_891
+    depends_on:
+      - db-pda
+
+  jaeger-pda:
+    image: "jaegertracing/all-in-one:latest"
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "${PORT_WEB_UI-8081}:${PORT_WEB_UI-8081}"
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=sns
+      - DEFAULT_REGION=us-east-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/private${TMPDIR}:/tmp/localstack"
+
+  setup-resources:
+    image: mesosphere/aws-cli
+    environment:
+      - AWS_ACCESS_KEY_ID=AKIAEXAMPLE123
+      - AWS_SECRET_ACCESS_KEY=AWSSECRETACCESSEY123
+      - AWS_DEFAULT_REGION=us-east-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        sleep 20
+        # Executing SNS
+        aws sns create-topic --name person-approval-notification --endpoint-url=http://localstack:4566
+      "
+    depends_on:
+      - localstack
+
